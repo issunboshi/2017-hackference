@@ -54,7 +54,7 @@ def transcribe(pictureURL):
         print('Error:')
         print(e)
 
-def get_AID(receipt):
+def getAID(receipt):
     """
     input: receipt - text of the receipt
     output: AID number of the receipt (if found) empty string othrwise
@@ -65,3 +65,5 @@ def get_AID(receipt):
         return match.group()
     else:
         return ""
+
+def get
