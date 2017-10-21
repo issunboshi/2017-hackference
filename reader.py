@@ -1,4 +1,5 @@
 import http.client, urllib.request, urllib.parse, urllib.error, base64, json
+import re
 
 # links to receipts
 receipts = ['https://i.imgur.com/QGDFRfd.jpg', 'https://i.imgur.com/jxdkORa.jpg', 'https://i.imgur.com/eAKRCHb.jpg']
@@ -52,3 +53,12 @@ def transcribe(pictureURL):
     except Exception as e:
         print('Error:')
         print(e)
+
+def get_AID(receipt):
+    """
+    input: receipt - text of the receipt
+    output: AID number of the receipt
+    """
+
+    result = re.search("A\d{13}", receipt).group()
+    return result
