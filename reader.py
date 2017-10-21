@@ -2,6 +2,14 @@ import http.client, urllib.request, urllib.parse, urllib.error, base64, json
 
 
 def transcribe(url):
+    """
+    input: url - global url to image transcribed
+    output: space seperated list of all text in the image
+
+    Method is based on the example provided in
+    Microsoft cognitive documentation, but is modified to further parse JSON
+    """
+
     subscription_key = 'a48ce7ca33e746349ab4b33a2fe054c7'
 
     uri_base = 'westeurope.api.cognitive.microsoft.com'
@@ -30,7 +38,6 @@ def transcribe(url):
 
         # 'data' contains the JSON data. The following formats the JSON data for display.
         parsed = json.loads(data)
-        print ("Response:")
         # print (json.dumps(parsed, sort_keys=True, indent=2))
         lines = parsed['regions'][0]['lines']
         result = ""
