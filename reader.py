@@ -2,7 +2,7 @@ import http.client, urllib.request, urllib.parse, urllib.error, base64, json
 import re
 
 # links to receipts
-receipts = ['https://i.imgur.com/QGDFRfd.jpg', 'https://i.imgur.com/jxdkORa.jpg', 'https://i.imgur.com/W0xLK0j.jpg' 'https://i.imgur.com/eAKRCHb.jpg']
+receipts = ['https://i.imgur.com/QGDFRfd.jpg', 'https://i.imgur.com/jxdkORa.jpg', 'https://i.imgur.com/W0xLK0j.jpg', 'https://i.imgur.com/eAKRCHb.jpg']
 
 def transcribe(pictureURL):
     """
@@ -69,7 +69,7 @@ def getAID(receipt):
 def getPrice(receipt):
     """
     input: receipt - text of the receipt
-    output: last price in the receipt in pence
+    output: last price in the receipt in pence if found, empty string othrwise
     """
 
     noDigits = 0
@@ -86,3 +86,18 @@ def getPrice(receipt):
         return ''
 
     return price
+
+def getDate(receipt):
+    """
+    input: receipt - text of the receipt
+    output: date of the receipt (dd/mm/yy) if found empty string otherwise
+    """
+
+    match = re.search("\d{2}\/\d{2}\/\d{2}", receipt)
+    if match:
+        return match.group()
+    else:
+        return ""
+
+for a in receipts:
+    print(getDate(transcribe(a)))
