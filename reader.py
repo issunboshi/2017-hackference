@@ -2,7 +2,7 @@ import http.client, urllib.request, urllib.parse, urllib.error, base64, json
 import re
 
 # links to receipts
-receipts = ['https://i.imgur.com/QGDFRfd.jpg', 'https://i.imgur.com/jxdkORa.jpg', 'https://i.imgur.com/eAKRCHb.jpg']
+receipts = ['https://i.imgur.com/QGDFRfd.jpg', 'https://i.imgur.com/jxdkORa.jpg', 'https://i.imgur.com/W0xLK0j.jpg' 'https://i.imgur.com/eAKRCHb.jpg']
 
 def transcribe(pictureURL):
     """
@@ -66,4 +66,23 @@ def getAID(receipt):
     else:
         return ""
 
-def get
+def getPrice(receipt):
+    """
+    input: receipt - text of the receipt
+    output: last price in the receipt in pence
+    """
+
+    noDigits = 0
+    price = ''
+    pos = receipt.rfind('GBP') + 3
+    while (noDigits < 3) & (pos < len(receipt)):
+        if receipt[pos].isdigit():
+            price += receipt[pos]
+            noDigits += 1
+
+        pos += 1
+
+    if noDigits < 3:
+        return ''
+
+    return price
