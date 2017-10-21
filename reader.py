@@ -1,7 +1,9 @@
 import http.client, urllib.request, urllib.parse, urllib.error, base64, json
 
+# links to receipts
+receipts = ['https://i.imgur.com/QGDFRfd.jpg', 'https://i.imgur.com/jxdkORa.jpg', 'https://i.imgur.com/eAKRCHb.jpg']
 
-def transcribe(url):
+def transcribe(pictureURL):
     """
     input: url - global url to image transcribed
     output: space seperated list of all text in the image
@@ -25,9 +27,8 @@ def transcribe(url):
         'language': 'en',
         'detectOrientation ': 'true',
     })
-
     # The URL of a JPEG image containing text.
-    body = "{'url':url}"
+    body = "{'url': '"+pictureURL+"'}"
 
     try:
         # Execute the REST API call and get the response.
@@ -38,7 +39,6 @@ def transcribe(url):
 
         # 'data' contains the JSON data. The following formats the JSON data for display.
         parsed = json.loads(data)
-        # print (json.dumps(parsed, sort_keys=True, indent=2))
         lines = parsed['regions'][0]['lines']
         result = ""
         for line in lines:
@@ -50,5 +50,5 @@ def transcribe(url):
         return result
 
     except Exception as e:
-    print('Error:')
+        print('Error:')
         print(e)
