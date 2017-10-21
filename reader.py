@@ -57,8 +57,11 @@ def transcribe(pictureURL):
 def get_AID(receipt):
     """
     input: receipt - text of the receipt
-    output: AID number of the receipt
+    output: AID number of the receipt (if found) empty string othrwise
     """
 
-    result = re.search("A\d{13}", receipt).group()
-    return result
+    match = re.match("A\d{13}", receipt).group()
+    if match:
+        return match.group()
+    else:
+        return ""
