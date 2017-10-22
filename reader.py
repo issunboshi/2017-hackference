@@ -60,7 +60,7 @@ def getAID(receipt):
     output: AID number of the receipt (if found) empty string othrwise
     """
 
-    match = re.match("A\d{13}", receipt).group()
+    match = re.match("A\d{13}", receipt)
     if match:
         return match.group()
     else:
@@ -99,5 +99,22 @@ def getDate(receipt):
     else:
         return ""
 
-for a in receipts:
-    print(getDate(transcribe(a)))
+def generateData(receipts):
+    """
+    input: receipts - array of links to receipt png files
+    output: array of dictionaries containing receipt data
+    """
+
+    allData = []
+    for receipt in receipts:
+        receiptData = {}
+        receiptText = transcribe(receipt)
+        receiptData['AID'] = getAID(receiptText)
+        receiptData['price'] = getPrice(receiptText)
+        receiptData['date'] = getDate(receiptText)
+
+        allData.append(receiptData)
+
+    return allData
+
+    
