@@ -60,7 +60,7 @@ def getAID(receipt):
     output: AID number of the receipt (if found) empty string othrwise
     """
 
-    match = re.match("A\d{13}", receipt)
+    match = re.search("A\d{13}", receipt)
     if match:
         return match.group()
     else:
@@ -117,4 +117,26 @@ def generateData(receipts):
 
     return allData
 
-    
+finalData = json.dumps(generateData(receipts))
+
+# send processed data to JS function
+## insert address of JS function
+jsAddress = ''
+headers = {
+    # Request headers.
+    'Content-Type': 'application/json',
+    'Ocp-Apim-Subscription-Key': subscription_key,
+}
+
+params = urllib.parse.urlencode({
+    'language': 'en',
+    'detectOrientation ': 'true',
+})
+body = finalData
+
+try:
+    # Execute the REST API call and get the response.
+    conn = http.client.HTTPSConnection(jsAddress)
+    conn.request("POST", "/vision/v1.0/ocr?%s" % params, body, headers)
+    response = conn.getresponse()
+    data = response.read()
