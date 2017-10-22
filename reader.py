@@ -134,9 +134,8 @@ params = urllib.parse.urlencode({
 })
 body = finalData
 
-try:
-    # Execute the REST API call and get the response.
-    conn = http.client.HTTPSConnection(jsAddress)
-    conn.request("POST", "/vision/v1.0/ocr?%s" % params, body, headers)
-    response = conn.getresponse()
-    data = response.read()
+# Execute the REST API call and get the response.
+conn = http.client.HTTPSConnection(jsAddress)
+conn.request("POST", "/vision/v1.0/ocr?%s" % params, body, headers)
+response = conn.getresponse()
+data = response.read()
